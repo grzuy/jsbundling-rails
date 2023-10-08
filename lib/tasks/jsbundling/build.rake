@@ -24,12 +24,14 @@ module Jsbundling
 
     def install_command
       return "bun install" if File.exist?('bun.lockb') || (tool_exists?('bun') && !File.exist?('yarn.lock'))
+      return "npm install" if File.exist?('package-lock.json') || (tool_exists?('npm') && !File.exist?('yarn.lock'))
       return "yarn install" if File.exist?('yarn.lock') || tool_exists?('yarn')
       raise "jsbundling-rails: No suitable tool found for installing JavaScript dependencies"
     end
 
     def build_command
       return "bun run build" if File.exist?('bun.lockb') || (tool_exists?('bun') && !File.exist?('yarn.lock'))
+      return "npm run build" if File.exist?('package-lock.json') || (tool_exists?('npm') && !File.exist?('yarn.lock'))
       return "yarn build" if File.exist?('yarn.lock') || tool_exists?('yarn')
       raise "jsbundling-rails: No suitable tool found for building JavaScript"
     end
